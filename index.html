@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>番茄鐘工作法入門 — LLM Wiki 知識庫</title>
+  <style>
+    :root {
+      --primary: #d9483b;
+      --primary-light: #fdf2f1;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #e5e7eb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+    .badge {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.78rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+    .btn-slides {
+      background: var(--primary);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.55rem 1.1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      transition: opacity 0.2s;
+    }
+    .btn-slides:hover { opacity: 0.9; }
+    .layout {
+      max-width: 1120px;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      display: grid;
+      grid-template-columns: 270px 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 820px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+    nav {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+      height: fit-content;
+    }
+    nav h3 {
+      margin: 0 0 0.6rem 0.5rem;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .nav-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      padding: 0.6rem 0.75rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.93rem;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+      transition: background 0.15s;
+    }
+    .nav-btn:hover { background: #f1f5f9; }
+    .nav-btn.active {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 600;
+    }
+    main {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem 2rem;
+      min-height: 520px;
+    }
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      padding-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .meta-tag {
+      background: #f1f5f9;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-family: ui-monospace, monospace;
+    }
+    h1 { margin-top: 0; font-size: 1.6rem; }
+    h2 { font-size: 1.2rem; margin-top: 1.5rem; color: #111827; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.92rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.65rem 0.8rem;
+      text-align: left;
+    }
+    th { background: #f8fafc; }
+    .callout {
+      background: var(--primary-light);
+      border-left: 4px solid var(--primary);
+      padding: 0.85rem 1rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1rem 0;
+    }
+    .log-item {
+      border-left: 3px solid #cbd5e1;
+      padding-left: 1rem;
+      margin-bottom: 1rem;
+    }
+    .log-fix {
+      border-left-color: var(--primary);
+      background: #fffafa;
+      padding: 0.6rem 1rem;
+      border-radius: 0 8px 8px 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <span>🍅 番茄鐘工作法入門</span>
+      <span class="badge">LLM Wiki 知識庫 (5 篇 Ingest)</span>
+    </div>
+    <a href="slides.html" class="btn-slides">開啟教學 HTML 簡報 →</a>
+  </header>
+
+  <div class="layout">
+    <nav>
+      <h3>知識庫目錄 (wiki/)</h3>
+      <button class="nav-btn active" onclick="showPage('overview', this)">📚 知識庫總覽與對應表</button>
+      <button class="nav-btn" onclick="showPage('p1', this)">01. 核心定義與時間節奏</button>
+      <button class="nav-btn" onclick="showPage('p2', this)">02. 標準執行四步驟與長休息</button>
+      <button class="nav-btn" onclick="showPage('p3', this)">03. 不可分割性與中斷處理</button>
+      <button class="nav-btn" onclick="showPage('p4', this)">04. 任務拆解與合併策略</button>
+      <button class="nav-btn" onclick="showPage('p5', this)">05. 新手常見誤區與適用邊界</button>
+      <h3 style="margin-top:1.2rem;">驗證與紀錄</h3>
+      <button class="nav-btn" onclick="showPage('log', this)">🔍 檢查紀錄 (log.md)</button>
+    </nav>
+
+    <main id="content-area"></main>
+  </div>
+
+  <script>
+    const pages = {
+      overview: `
+        <div class="meta-bar">
+          <span class="meta-tag">檔案：wiki/index.md</span>
+          <span class="meta-tag">狀態：已通過檢查點 A（5/5 篇一致）</span>
+        </div>
+        <h1>番茄鐘工作法（Pomodoro Technique）知識庫總覽</h1>
+        <p>本知識庫透過「先討論、後生成」流程，將 5 篇原始參考資料（<code>raw/</code>）整理為結構化知識條目（<code>wiki/</code>），並統一所有時間參數與執行規則，作為教學簡報 <code>slides.html</code> 的唯一事實來源。</p>
+        <div class="callout">
+          <strong>全庫統一基準參數：</strong>單次專注 <strong>25 分鐘</strong> ＋ 短休息 <strong>5 分鐘</strong>；每完成 <strong>4 個番茄鐘</strong> 後進行 <strong>15～30 分鐘</strong> 長休息。
+        </div>
+        <h2>原始資料與 Wiki 條目對應表</h2>
+        <table>
+          <thead>
+            <tr><th>Wiki 條目</th><th>原始資料來源</th><th>核心知識重點</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>01_core_concepts.md</code></td><td><code>raw/01_origin_and_core.md</code></td><td>起源背景、時間盒概念、25+5 分鐘節奏</td></tr>
+            <tr><td><code>02_standard_workflow.md</code></td><td><code>raw/02_four_steps.md</code></td><td>選任務 → 計時 → 畫 X → 休息；4 輪長休息規則</td></tr>
+            <tr><td><code>03_interruption_handling.md</code></td><td><code>raw/03_interruptions.md</code></td><td>禁止暫停、中斷即作廢；內外部中斷應對法</td></tr>
+            <tr><td><code>04_task_estimation.md</code></td><td><code>raw/04_task_planning.md</code></td><td>大任務（大於 5～7 顆）拆小、小任務（小於 1 顆）合併</td></tr>
+            <tr><td><code>05_pitfalls_and_scope.md</code></td><td><code>raw/05_pitfalls.md</code></td><td>三大新手誤區與適用／不適用情境邊界</td></tr>
+          </tbody>
+        </table>
+      `,
+      p1: `
+        <div class="meta-bar">
+          <span class="meta-tag">檔案：wiki/01_core_concepts.md</span>
+          <span class="meta-tag">來源：raw/01_origin_and_core.md</span>
+        </div>
+        <h1>01. 核心定義與時間節奏</h1>
+        <h2>一、背景起源</h2>
+        <ul>
+          <li><strong>創始人</strong>：弗朗切斯科·西里洛（Francesco Cirillo），於 1980 年代末期創立。</li>
+          <li><strong>名稱由來</strong>：大學時期使用番茄造型的廚房計時器設定 25 分鐘專注讀書而得名。</li>
+        </ul>
+        <h2>二、核心機制：時間盒（Timeboxing）</h2>
+        <p>將令人抗拒的龐大工作時間，切割為固定長度的「專注區塊」與「休息區塊」：</p>
+        <ul>
+          <li><strong>1 個番茄鐘工作時間</strong>：<code>25 分鐘</code>（全神貫注於單一任務）</li>
+          <li><strong>1 次標準短休息時間</strong>：<code>5 分鐘</code>（完全脫離工作狀態）</li>
+        </ul>
+        <h2>三、為什麼有效？</h2>
+        <ul>
+          <li><strong>降低啟動阻力</strong>：大腦面對「只需專注 25 分鐘」比面對「要寫一整天報告」更容易開始行動。</li>
+          <li><strong>維持注意力高峰</strong>：透過強制短休息避免認知疲勞累積。</li>
+        </ul>
+      `,
+      p2: `
+        <div class="meta-bar">
+          <span class="meta-tag">檔案：wiki/02_standard_workflow.md</span>
+          <span class="meta-tag">來源：raw/02_four_steps.md</span>
+        </div>
+        <h1>02. 標準執行四步驟與長休息規則</h1>
+        <h2>一、標準執行四步驟</h2>
+        <ol>
+          <li><strong>步驟一（選任務）</strong>：從今日待辦清單（To-Do Today）選出最優先的 <strong>1 項任務</strong>。</li>
+          <li><strong>步驟二（設時間）</strong>：設定計時器為 <strong>25 分鐘</strong>，開始倒數。</li>
+          <li><strong>步驟三（專注做）</strong>：只做該項任務直到鈴響，完成後在紙上畫一個 <strong>「X」</strong> 作紀錄。</li>
+          <li><strong>步驟四（去休息）</strong>：立即停止工作，進行 <strong>5 分鐘短休息</strong>。</li>
+        </ol>
+        <h2>二、長休息觸發規則</h2>
+        <div class="callout">
+          每累積完成 <strong>4 個番茄鐘</strong>（畫滿 4 個 X）後，必須進行一次 <strong>15～30 分鐘</strong> 的長休息，讓大腦徹底恢復精力再開啟下一輪循環。
+        </div>
+      `,
+      p3: `
+        <div class="meta-bar">
+          <span class="meta-tag">檔案：wiki/03_interruption_handling.md</span>
+          <span class="meta-tag">來源：raw/03_interruptions.md</span>
+        </div>
+        <h1>03. 不可分割性與中斷處理原則</h1>
+        <h2>一、核心鐵律：不可分割性（Atomic Principle）</h2>
+        <ul>
+          <li>1 個番茄鐘是不可拆分的最小單位，<strong>沒有「半個番茄鐘」</strong>。</li>
+          <li>計時期間<strong>禁止按下暫停鍵</strong>。若因突發狀況被迫中斷，該番茄鐘<strong>直接作廢</strong>，處理完畢後須重新計時 25 分鐘。</li>
+        </ul>
+        <h2>二、兩類中斷的應對策略</h2>
+        <table>
+          <thead>
+            <tr><th>中斷類型</th><th>常見情境</th><th>標準處理方式</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>內部中斷</strong><br/>（自己分心）</td>
+              <td>突然想查資料、回訊息、喝水</td>
+              <td>花 3 秒把念頭寫在「計畫外緊急事項」欄位，<strong>不中斷手邊工作</strong>，等 25 分鐘結束再處理。</td>
+            </tr>
+            <tr>
+              <td><strong>外部中斷</strong><br/>（他人干擾）</td>
+              <td>同學／同事搭話、手機來電</td>
+              <td>執行四字訣：<strong>告知 → 協商 → 排程 → 回覆</strong>（說明正在專注、約 25 分鐘後聯繫、寫入清單、休息時回覆）。</td>
+            </tr>
+          </tbody>
+        </table>
+      `,
+      p4: `
+        <div class="meta-bar">
+          <span class="meta-tag">檔案：wiki/04_task_estimation.md</span>
+          <span class="meta-tag">來源：raw/04_task_planning.md</span>
+        </div>
+        <h1>04. 任務拆解與合併策略</h1>
+        <h2>一、每日產能基準</h2>
+        <p>每天開工前花 5 分鐘預估各任務所需的番茄鐘數量。一般人每天穩定可完成的總量約為 <strong>8～12 個番茄鐘</strong>。</p>
+        <h2>二、大拆小、小併大原則</h2>
+        <ul>
+          <li><strong>大任務拆小（預估大於 5～7 個番茄鐘）</strong>：顆粒度過大容易引發拖延，必須拆解為多個 <strong>1～4 個番茄鐘</strong> 的具體子任務（例如將「寫期末報告」拆為「找 3 篇文獻」、「列大綱」、「寫前言初稿」）。</li>
+          <li><strong>小任務合併（預估小於 1 個番茄鐘）</strong>：零碎小事不單獨開計時器，將多項小事打包進同一個 <strong>25 分鐘</strong> 內集中解決（例如「回 2 封信 + 繳費 + 整理桌面」合併為 1 顆）。</li>
+        </ul>
+      `,
+      p5: `
+        <div class="meta-bar">
+          <span class="meta-tag">檔案：wiki/05_pitfalls_and_scope.md</span>
+          <span class="meta-tag">來源：raw/05_pitfalls.md</span>
+        </div>
+        <h1>05. 新手常見誤區與適用邊界</h1>
+        <h2>一、新手三大常見誤區</h2>
+        <ol>
+          <li><strong>用滑手機當作休息</strong>：短影音與社群資訊會持續消耗注意力；休息時應起身走動、喝水、伸展或閉眼。</li>
+          <li><strong>鈴響後硬撐不休息</strong>：覺得「差一點就寫完」而延後休息，會破壞節奏並加速後續疲勞。</li>
+          <li><strong>只追求累積 X 的數量</strong>：忽略任務實際產出品質，本末倒置。</li>
+        </ol>
+        <h2>二、適用與不適用情境</h2>
+        <ul>
+          <li><strong>最適合的任務</strong>：目標明確、步驟清楚但容易拖延的工作（寫報告、讀文獻、寫程式除錯、準備考試）。</li>
+          <li><strong>較不適合的任務</strong>：需要高度即時溝通的工作（如客服、連續會議），或已進入深度創作心流（Flow）且不希望被每 25 分鐘打斷的靈感發想工作。</li>
+        </ul>
+      `,
+      log: `
+        <div class="meta-bar">
+          <span class="meta-tag">檔案：wiki/log.md</span>
+          <span class="meta-tag">Loop 1 執行與檢查紀錄</span>
+        </div>
+        <h1>Loop 1：知識庫建構與檢查點 A 紀錄</h1>
+        <div class="log-item">
+          <strong>[Ingest 01]</strong> 匯入 <code>raw/01_origin_and_core.md</code> → 生成 <code>wiki/01_core_concepts.md</code>。確認基準參數：工作 25 分鐘、短休息 5 分鐘。
+        </div>
+        <div class="log-item">
+          <strong>[Ingest 02]</strong> 匯入 <code>raw/02_four_steps.md</code> → 生成 <code>wiki/02_standard_workflow.md</code>。確認長休息參數：每 4 個番茄鐘後休息 15～30 分鐘。
+        </div>
+        <div class="log-item log-fix">
+          <strong>[Ingest 03 & 檢查點 A 退回修正]</strong> 匯入 <code>raw/03_interruptions.md</code> → 生成 <code>wiki/03_interruption_handling.md</code>。<br/>
+          • <strong>發現問題</strong>：初版生成時誤寫成「遇到急事可先按暫停鍵」，與原著「不可分割性原則」矛盾。<br/>
+          • <strong>修正動作</strong>：觸發檢查點 A 退回重寫，明確規定「嚴禁暫停、中斷即作廢重計」，並補充內部／外部中斷對照表。
+        </div>
+        <div class="log-item">
+          <strong>[Ingest 04]</strong> 匯入 <code>raw/04_task_planning.md</code> → 生成 <code>wiki/04_task_estimation.md</code>。補齊「大於 5～7 顆拆小、小於 1 顆合併」量化標準。
+        </div>
+        <div class="log-item">
+          <strong>[Ingest 05 & 檢查點 A 終檢]</strong> 匯入 <code>raw/05_pitfalls.md</code> → 生成 <code>wiki/05_pitfalls_and_scope.md</code> 與 <code>wiki/index.md</code>。全庫 5 篇條目時間參數（25 / 5 / 4 輪 / 15～30）核對一致，正式通過檢查點 A。
+        </div>
+      `
+    };
+
+    function showPage(key, btn) {
+      document.getElementById('content-area').innerHTML = pages[key];
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
+
+    showPage('overview', document.querySelector('.nav-btn'));
+  </script>
+</body>
+</html>
